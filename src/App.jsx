@@ -37,7 +37,7 @@ const App = () => {
     location: "Kannur, Kerala",
     email: "akshayps7309@gmail.com",
     phone: "+91 8301017309",
-    summary: "Passionate Full Stack Developer with a strong foundation in both frontend and backend development. Skilled in building scalable applications using Node.js, Python, React, and Angular. Committed to writing clean, efficient code and delivering user-friendly interfaces.",
+    summary: "Passionate Full Stack Developer with a strong foundation in both frontend and backend development. Skilled in building scalable applications using Node.js, Python, React, and Angular.",
     skills: {
       programming: ["JavaScript", "TypeScript", "HTML5", "CSS3", "SCSS", "Python"],
       frameworks: ["React", "Angular", "Node.js", "Express.js", "FastAPI", "Flask"],
@@ -49,7 +49,7 @@ const App = () => {
         title: "ProHire",
         description: "A professional hiring platform with automated workflows and real-time tracking.",
         tech: ["Angular", "Node.js", "Express", "MongoDB"],
-        image: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop" // I'll use placeholders for now but will replace with generated ones in a bit
+        image: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop"
       },
       {
         title: "Project Fair",
@@ -72,9 +72,8 @@ const App = () => {
     ]
   };
 
-  // Replace with locally generated image paths for the final version
   const images = {
-    profile: "/akshay_profile.png", // I will move the generated image to public
+    profile: "/akshay_profile.png",
     prohire: "/project_prohire.png",
     projectFair: "/project_fair.png",
     journal: "/project_journal.png",
@@ -85,52 +84,84 @@ const App = () => {
     <div className="portfolio">
       {/* Navbar */}
       <nav className={`glass-nav ${isScrolled ? 'scrolled' : ''}`}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="container nav-container">
           <motion.h1
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-gradient"
-            style={{ fontSize: '1.5rem', cursor: 'pointer' }}
+            className="text-gradient logo"
           >
             AKSHAY.PS
           </motion.h1>
 
-          <div className="nav-links" style={{ display: 'flex', gap: '2rem' }}>
+          {/* Desktop Navigation */}
+          <div className="nav-links desktop-nav">
             {['About', 'Skills', 'Projects', 'Contact'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} style={{ fontWeight: 500, color: 'var(--text-secondary)' }} className="nav-hover">
+              <a key={item} href={`#${item.toLowerCase()}`} className="nav-link">
                 {item}
               </a>
             ))}
           </div>
 
-          <button className="bg-gradient" style={{ padding: '0.6rem 1.2rem', borderRadius: '12px', border: 'none', color: 'white', fontWeight: 600, cursor: 'pointer' }}>
+          {/* Mobile Menu Toggle */}
+          <button className="mobile-menu-btn" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+
+          <button className="bg-gradient resume-btn desktop-resume">
             Resume
           </button>
         </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="mobile-menu"
+            >
+              {['About', 'Skills', 'Projects', 'Contact'].map((item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  className="mobile-nav-link"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item}
+                </a>
+              ))}
+              <button className="bg-gradient resume-btn mobile-resume">
+                Resume
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Hero Section */}
-      <section id="about" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', paddingTop: '120px' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '4rem', alignItems: 'center' }}>
+      <section id="about" className="hero-section">
+        <div className="container hero-container">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            className="hero-content"
           >
-            <h2 style={{ fontSize: '1.2rem', color: 'var(--accent-secondary)', marginBottom: '1rem', letterSpacing: '2px' }}>HELLO, I AM</h2>
-            <h1 style={{ fontSize: '4.5rem', lineHeight: 1.1, marginBottom: '1.5rem' }}>
+            <h2 className="hero-subtitle">HELLO, I AM</h2>
+            <h1 className="hero-title">
               Building <span className="text-gradient">Digital Experiences</span> That Matter.
             </h1>
-            <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginBottom: '2.5rem', maxWidth: '600px' }}>
+            <p className="hero-description">
               {profileData.summary}
             </p>
-            <div style={{ display: 'flex', gap: '1.5rem' }}>
-              <button className="bg-gradient" style={{ padding: '1rem 2rem', borderRadius: '16px', border: 'none', color: 'white', fontWeight: 600, fontSize: '1.1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div className="hero-actions">
+              <button className="bg-gradient cta-btn">
                 View Projects <ChevronRight size={20} />
               </button>
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <a href="#" className="glass-card" style={{ padding: '12px', borderRadius: '12px' }}><Github size={24} /></a>
-                <a href="#" className="glass-card" style={{ padding: '12px', borderRadius: '12px' }}><Linkedin size={24} /></a>
+              <div className="social-links">
+                <a href="https://github.com/akshayps10" className="glass-card social-icon"><Github size={24} /></a>
+                <a href="https://linkedin.com/in/akshayps" className="glass-card social-icon"><Linkedin size={24} /></a>
               </div>
             </div>
           </motion.div>
@@ -139,31 +170,30 @@ const App = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            style={{ position: 'relative' }}
+            className="hero-image-wrapper"
           >
-            <div className="glass-card animate-float" style={{ padding: '20px', borderRadius: '40px', position: 'relative', zIndex: 2 }}>
-              <div style={{ borderRadius: '30px', overflow: 'hidden', height: '500px', background: '#222' }}>
+            <div className="glass-card animate-float profile-card">
+              <div className="profile-image-container">
                 <img
                   src={images.profile}
                   alt="Akshay PS"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  className="profile-image"
                   onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" }}
                 />
               </div>
             </div>
-            {/* Background Orbs */}
-            <div style={{ position: 'absolute', top: '-10%', right: '-10%', width: '300px', height: '300px', background: 'var(--accent-primary)', filter: 'blur(100px)', opacity: 0.2, borderRadius: '50%' }}></div>
-            <div style={{ position: 'absolute', bottom: '-10%', left: '-10%', width: '250px', height: '250px', background: 'var(--accent-secondary)', filter: 'blur(100px)', opacity: 0.2, borderRadius: '50%' }}></div>
+            <div className="orb orb-1"></div>
+            <div className="orb orb-2"></div>
           </motion.div>
         </div>
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="bg-secondary" style={{ background: 'var(--bg-secondary)' }}>
+      <section id="skills" className="skills-section">
         <div className="container">
           <h2 className="section-title">Technical <span className="text-gradient">Arsenal</span></h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
-            <SkillCard title="Frontend" icon={<Layout size={32} />} skills={profileData.skills.programming.slice(0, 5)} />
+          <div className="skills-grid">
+            <SkillCard title="Frontend" icon={<Layout size={32} />} skills={profileData.skills.programming.slice(0, 6)} />
             <SkillCard title="Backend" icon={<Terminal size={32} />} skills={profileData.skills.frameworks} />
             <SkillCard title="Database" icon={<Database size={32} />} skills={profileData.skills.databases} />
             <SkillCard title="Tools" icon={<Code2 size={32} />} skills={profileData.skills.tools} />
@@ -172,10 +202,10 @@ const App = () => {
       </section>
 
       {/* Projects Section */}
-      <section id="projects">
+      <section id="projects" className="projects-section">
         <div className="container">
           <h2 className="section-title">Selected <span className="text-gradient">Works</span></h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '3rem' }}>
+          <div className="projects-grid">
             {profileData.projects.map((project, index) => (
               <ProjectCard key={index} {...project} index={index} />
             ))}
@@ -184,46 +214,466 @@ const App = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact">
+      <section id="contact" className="contact-section">
         <div className="container">
-          <div className="glass-card" style={{ padding: '4rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }}>
-            <div>
-              <h2 style={{ fontSize: '3rem', marginBottom: '1.5rem' }}>Let's Work <span className="text-gradient">Together</span></h2>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '2rem' }}>
+          <div className="glass-card contact-card">
+            <div className="contact-info">
+              <h2 className="contact-title">Let's Work <span className="text-gradient">Together</span></h2>
+              <p className="contact-description">
                 I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <div className="contact-details">
                 <ContactInfo icon={<Mail className="text-gradient" />} text={profileData.email} />
                 <ContactInfo icon={<Phone className="text-gradient" />} text={profileData.phone} />
                 <ContactInfo icon={<MapPin className="text-gradient" />} text={profileData.location} />
               </div>
             </div>
-            <form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              <input type="text" placeholder="Your Name" className="glass-card" style={{ padding: '1rem', border: '1px solid var(--glass-border)', color: 'white' }} />
-              <input type="email" placeholder="Your Email" className="glass-card" style={{ padding: '1rem', border: '1px solid var(--glass-border)', color: 'white' }} />
-              <textarea placeholder="Your Message" rows="5" className="glass-card" style={{ padding: '1rem', border: '1px solid var(--glass-border)', color: 'white', resize: 'none' }}></textarea>
-              <button className="bg-gradient" style={{ padding: '1rem', borderRadius: '12px', border: 'none', color: 'white', fontWeight: 600, cursor: 'pointer' }}>Send Message</button>
+            <form className="contact-form">
+              <input type="text" placeholder="Your Name" className="glass-card form-input" />
+              <input type="email" placeholder="Your Email" className="glass-card form-input" />
+              <textarea placeholder="Your Message" rows="5" className="glass-card form-input form-textarea"></textarea>
+              <button type="submit" className="bg-gradient submit-btn">Send Message</button>
             </form>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer style={{ padding: '4rem 0', textAlign: 'center', borderTop: '1px solid var(--glass-border)' }}>
-        <p style={{ color: 'var(--text-secondary)' }}>
+      <footer className="footer">
+        <p className="footer-text">
           © 2026 Akshay PS. Built with Passion & Speed.
         </p>
       </footer>
 
       <style>{`
-        .scrolled { padding: 1rem 0 !important; }
-        .nav-hover:hover { color: var(--text-primary) !important; }
-        input:focus, textarea:focus { outline: none; border-color: var(--accent-primary) !important; }
-        @media (max-width: 968px) {
-            #about .container, #contact .container .glass-card { grid-template-columns: 1fr !important; }
-            #about .container { text-align: center; }
-            #about .container div { display: flex; flex-direction: column; align-items: center; }
-            h1 { fontSize: 3rem !important; }
+        /* Navigation Styles */
+        .nav-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .logo {
+          font-size: 1.5rem;
+          cursor: pointer;
+        }
+
+        .nav-links {
+          display: flex;
+          gap: 2rem;
+        }
+
+        .nav-link {
+          font-weight: 500;
+          color: var(--text-secondary);
+          transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+          color: var(--text-primary);
+        }
+
+        .resume-btn {
+          padding: 0.6rem 1.2rem;
+          border-radius: 12px;
+          border: none;
+          color: white;
+          font-weight: 600;
+          cursor: pointer;
+        }
+
+        .mobile-menu-btn {
+          display: none;
+          background: none;
+          border: none;
+          color: white;
+          cursor: pointer;
+        }
+
+        .mobile-menu {
+          display: none;
+        }
+
+        .desktop-nav, .desktop-resume {
+          display: flex;
+        }
+
+        /* Hero Section */
+        .hero-section {
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          padding-top: 120px;
+        }
+
+        .hero-container {
+          display: grid;
+          grid-template-columns: 1.2fr 1fr;
+          gap: 4rem;
+          align-items: center;
+        }
+
+        .hero-subtitle {
+          font-size: 1.2rem;
+          color: var(--accent-secondary);
+          margin-bottom: 1rem;
+          letter-spacing: 2px;
+        }
+
+        .hero-title {
+          font-size: 4.5rem;
+          line-height: 1.1;
+          margin-bottom: 1.5rem;
+        }
+
+        .hero-description {
+          font-size: 1.2rem;
+          color: var(--text-secondary);
+          margin-bottom: 2.5rem;
+          max-width: 600px;
+        }
+
+        .hero-actions {
+          display: flex;
+          gap: 1.5rem;
+          align-items: center;
+        }
+
+        .cta-btn {
+          padding: 1rem 2rem;
+          border-radius: 16px;
+          border: none;
+          color: white;
+          font-weight: 600;
+          font-size: 1.1rem;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .social-links {
+          display: flex;
+          gap: 1rem;
+        }
+
+        .social-icon {
+          padding: 12px;
+          border-radius: 12px;
+          transition: transform 0.3s;
+        }
+
+        .social-icon:hover {
+          transform: translateY(-5px);
+        }
+
+        .hero-image-wrapper {
+          position: relative;
+        }
+
+        .profile-card {
+          padding: 20px;
+          border-radius: 40px;
+          position: relative;
+          z-index: 2;
+        }
+
+        .profile-image-container {
+          border-radius: 30px;
+          overflow: hidden;
+          height: 500px;
+          background: #222;
+        }
+
+        .profile-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .orb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(100px);
+          opacity: 0.2;
+        }
+
+        .orb-1 {
+          top: -10%;
+          right: -10%;
+          width: 300px;
+          height: 300px;
+          background: var(--accent-primary);
+        }
+
+        .orb-2 {
+          bottom: -10%;
+          left: -10%;
+          width: 250px;
+          height: 250px;
+          background: var(--accent-secondary);
+        }
+
+        /* Skills Section */
+        .skills-section {
+          background: var(--bg-secondary);
+        }
+
+        .skills-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 2rem;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 2.5rem;
+        }
+
+        /* Contact Section */
+        .contact-card {
+          padding: 4rem;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 4rem;
+        }
+
+        .contact-title {
+          font-size: 3rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .contact-description {
+          color: var(--text-secondary);
+          font-size: 1.1rem;
+          margin-bottom: 2rem;
+        }
+
+        .contact-details {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .contact-form {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .form-input {
+          padding: 1rem;
+          border: 1px solid var(--glass-border);
+          color: white;
+          background: var(--glass-bg);
+        }
+
+        .form-input:focus {
+          outline: none;
+          border-color: var(--accent-primary);
+        }
+
+        .form-textarea {
+          resize: none;
+        }
+
+        .submit-btn {
+          padding: 1rem;
+          border-radius: 12px;
+          border: none;
+          color: white;
+          font-weight: 600;
+          cursor: pointer;
+        }
+
+        /* Footer */
+        .footer {
+          padding: 4rem 0;
+          text-align: center;
+          border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-text {
+          color: var(--text-secondary);
+        }
+
+        /* Tablet Responsive (768px - 1024px) */
+        @media (max-width: 1024px) {
+          .hero-container {
+            gap: 3rem;
+          }
+
+          .hero-title {
+            font-size: 3.5rem;
+          }
+
+          .hero-description {
+            font-size: 1.1rem;
+          }
+
+          .profile-image-container {
+            height: 400px;
+          }
+
+          .contact-card {
+            padding: 3rem;
+            gap: 3rem;
+          }
+
+          .contact-title {
+            font-size: 2.5rem;
+          }
+
+          .projects-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          }
+        }
+
+        /* Mobile Responsive (up to 767px) */
+        @media (max-width: 767px) {
+          .mobile-menu-btn {
+            display: block;
+          }
+
+          .desktop-nav, .desktop-resume {
+            display: none;
+          }
+
+          .mobile-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: rgba(10, 10, 10, 0.95);
+          }
+
+          .mobile-nav-link {
+            padding: 0.8rem;
+            color: var(--text-secondary);
+            text-align: center;
+            border-radius: 8px;
+            transition: all 0.3s;
+          }
+
+          .mobile-nav-link:hover {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+          }
+
+          .mobile-resume {
+            width: 100%;
+            padding: 0.8rem;
+          }
+
+          .logo {
+            font-size: 1.2rem;
+          }
+
+          .hero-section {
+            padding-top: 100px;
+            min-height: auto;
+          }
+
+          .hero-container {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+          }
+
+          .hero-content {
+            text-align: center;
+          }
+
+          .hero-subtitle {
+            font-size: 0.9rem;
+          }
+
+          .hero-title {
+            font-size: 2.2rem;
+          }
+
+          .hero-description {
+            font-size: 1rem;
+            max-width: 100%;
+          }
+
+          .hero-actions {
+            flex-direction: column;
+            width: 100%;
+            gap: 1.2rem;
+          }
+
+          .cta-btn {
+            width: 100%;
+            justify-content: center;
+            font-size: 1rem;
+            padding: 0.9rem 1.5rem;
+          }
+
+          .social-links {
+            justify-content: center;
+          }
+
+          .profile-image-container {
+            height: 350px;
+          }
+
+          .skills-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+
+          .projects-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+
+          .contact-card {
+            grid-template-columns: 1fr;
+            padding: 2rem;
+            gap: 2.5rem;
+          }
+
+          .contact-title {
+            font-size: 2rem;
+          }
+
+          .contact-description {
+            font-size: 1rem;
+          }
+        }
+
+        /* Small Mobile (up to 480px) */
+        @media (max-width: 480px) {
+          .hero-title {
+            font-size: 1.8rem;
+          }
+
+          .profile-image-container {
+            height: 300px;
+          }
+
+          .profile-card {
+            padding: 15px;
+            border-radius: 30px;
+          }
+
+          .contact-card {
+            padding: 1.5rem;
+          }
+
+          .orb {
+            display: none;
+          }
+
+          .skills-grid {
+            gap: 1.2rem;
+          }
+        }
+
+        .scrolled {
+          padding: 1rem 0 !important;
         }
       `}</style>
     </div>
@@ -249,7 +699,6 @@ const SkillCard = ({ title, icon, skills }) => (
 );
 
 const ProjectCard = ({ title, description, tech, image, index }) => {
-  // Determine image based on title for local images
   const localImg = title === "ProHire" ? "/project_prohire.png" :
     title === "Project Fair" ? "/project_fair.png" :
       title === "Journal Spotlight" ? "/project_journal.png" :
